@@ -5,7 +5,7 @@ function computerPlay() {
         return Math.floor(randomNum);
     }
 
-    function assignNumToShape() {
+    function playComputerRound() {
 
         switch (getRandomNum(0, 2)) {
             case 0: 
@@ -22,17 +22,19 @@ function computerPlay() {
         }
     }
 
-    return assignNumToShape();
+    return playComputerRound();
 }
+let playerSelection;
+let computerSelection;
 
+function selectAShape(btn) {
+    playerSelection = btn.textContent.toLowerCase();
+    return playerSelection;
+}
 function game() {
-    let score = 0;
-    let roundResult; 
-    let gameResult;
-
-    function playRound(playerSelection, computerSelection) {
+    function playRound() {
+        playerSelection = selectAShape();
         computerSelection = computerPlay(); // returns string value
-        playerSelection = prompt('rock, paper os scissors?').toLocaleLowerCase();
         
         let combinations = ['rock','paper','scissors','rock','paper','scissors','rock'];
 
@@ -45,30 +47,64 @@ function game() {
         }
 
         return roundResult;
+        
     }
 
-    function countScore() {
-        for(let i = 0; i < 5; i++) {
-            playRound();
-            console.log(roundResult);
     
-            if (roundResult.includes('win')) {
-                score++;
-            } else if (roundResult.includes('lose')) {
-                score--;
-            } else {
-                score;
-            }
-        }
-
-        return score;
-    }
-
-    countScore();
-    
-    gameResult = score < 0 ? 'You lost the game'
-        : score > 0 ? 'You won the game, congrats!'
-        : 'the game is a tie';
-
-    console.log(gameResult);
+   console.log(playRound());
 }
+
+/* My notes. Works correctly, just need to add the logic that determines
+* the winner and make it look pretty 
+const buttons = document.querySelectorAll('button');
+
+function computerPlay() {
+
+    function getRandomNum(min, max) {
+        let randomNum = min + Math.random() * (max + 1 - min);
+        return Math.floor(randomNum);
+    }
+
+    function playComputerRound() {
+
+        switch (getRandomNum(0, 2)) {
+            case 0: 
+            return 'rock';
+            break;
+
+            case 1: 
+            return 'paper';
+            break;
+
+            case 2: 
+            return 'scissors';
+            break;
+        }
+    }
+
+    return playComputerRound();
+}
+
+let playerSelection;
+let computerSelection = computerPlay();
+computerPlay();
+
+
+function selectAShape(btn) {
+    playerSelection = btn.textContent.toLowerCase();
+    return playerSelection;
+}
+
+function playRound() {
+    return playerSelection + ' ' + computerPlay();
+}
+
+
+buttons.forEach(button => button.addEventListener('click', () => {
+    selectAShape(button);
+}))
+
+buttons.forEach(button => button.addEventListener('click', () => {
+    console.log(playRound())
+}))
+*/
