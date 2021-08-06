@@ -54,13 +54,13 @@ function playRound() {
 }
 
 const buttons = document.querySelectorAll('button');
-
+const roundWinner = document.querySelector('#round-winner');
 
 buttons.forEach(button => button.addEventListener('click', () => {
     selectShape(button);
 }))
 
 buttons.forEach(button => button.addEventListener('click', () => {
-    
+    roundWinner.textContent = playRound();
 }))
 
