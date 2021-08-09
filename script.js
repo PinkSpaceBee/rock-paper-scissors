@@ -1,6 +1,11 @@
 // game logic
 let playerSelection;
-let computerSelection = computerPlay();
+let computerSelection;
+let scoreCount;
+let gameResult;
+let humanPoints = 0;
+let machinePoints = 0;
+let roundsPlayed = 0;
 
 function computerPlay() {
 
@@ -54,15 +59,42 @@ function playRound() {
 
 }
 
+function keepScore() {
+    ++roundsPlayed; 
+    if (roundWinner.textContent.includes('win') && roundsPlayed < 5) {
+        humanPoints += 1;
+        return `${humanPoints} : ${machinePoints}, ${roundsPlayed}`;
+    } else if (roundWinner.textContent.includes('lose') && roundsPlayed < 5) {
+        machinePoints += 1;
+        return `${humanPoints} : ${machinePoints}, ${roundsPlayed}`;
+    } else if (roundsPlayed < 5) {
+        return `${humanPoints} : ${machinePoints}, ${roundsPlayed}`;
+    } else if (roundsPlayed >= 5) {
+        roundsPlayed = 0;
+        humanPoints = 0;
+        machinePoints = 0;
+    }
+}
+
+function game() {
+    if (roundsPlayed < 4) {
+        return playRound();
+    } else if (roundsPlayed >= 4 && humanPoints > machinePoints) {
+        return `${roundWinner.textContent = `Huh, guess you won this time`}`;
+    } else if (roundsPlayed >=4 && machinePoints > humanPoints) {
+        return `${roundWinner.textContent = `Machines won!`}`;
+    } else {
+        return `${roundWinner.textContent = `A tie, really?`}`;
+    }
+}
+
 // DOM
 const buttons = document.querySelectorAll('button');
 const roundWinner = document.querySelector('#round-winner');
+const scoreDisplay = document.querySelector('#score');
 
 buttons.forEach(button => button.addEventListener('click', () => {
     selectShape(button);
-}))
-
-
-buttons.forEach(button => button.addEventListener('click', () => {
-    roundWinner.textContent = playRound();
+    roundWinner.textContent = game();
+    scoreDisplay.textContent = keepScore();
 }))
